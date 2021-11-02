@@ -114,6 +114,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+webscraper
 
 # Spyder project settings
 .spyderproject
