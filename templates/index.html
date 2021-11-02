@@ -3,13 +3,13 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>AAA</title>
+    <title>Chatbot</title>
 </head>
 <body>
-    <h1>Chatterbot</h1>
+    <h1>Super AI</h1>
     <div>
         <div id="chatbox">
-            <p class="botText"><span>Hi! I'm ChatterBot.</span></p>
+            <p class="botText"><span>Hi! I'm CHATBOT A{{id}}.</span></p>
         </div>
         <div id="userInput">
             <input id="textInput" type="text" name="msg" placeholder="Message">
@@ -23,20 +23,18 @@
                 $("#chatbox").append(userHtml);
                 document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'});
                 $.get("/get", { msg: rawText }).done(function(data) {
+                    console.log(rawText)
                     var botHtml = '<p class="botText"><span>' + data + '</span></p>';
                     $("#chatbox").append(botHtml);
                     document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'});
                 });
             }
+            
             $("#textInput").keypress(function(e) {
-                console.log('aaa')
-                if(e.which == 13) {
-                    getBotResponse();
-                }
+                $("#textInput").val().length != 0 && e.which == 13 ? getBotResponse() : null
             });
             $("#buttonInput").click(function() {
-                console.log('bbb')
-                getBotResponse();
+                $("#textInput").val().length != 0 ? getBotResponse() : null
             });
         </script>
     </div>
