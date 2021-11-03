@@ -8,9 +8,12 @@ import random
 app = Flask(__name__)
 
 english_bot = ChatBot(
-    "Chatterbot", storage_adapter="chatterbot.storage.SQLStorageAdapter"
+    "Chatterbot",
+    storage_adapter="chatterbot.storage.SQLStorageAdapter",
+    database_uri='sqlite:///database.sqlite3'
 )
 trainer = ChatterBotCorpusTrainer(english_bot)
+trainer.train("chatterbot.corpus.mycorpus")
 trainer.train("chatterbot.corpus.english")
 
 
