@@ -5,37 +5,40 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Chatbot</title>
 </head>
-<body>
-    <h1>Super AI, by Kay Gijzen</h1>
+<body onload="onLoad()">
+    <h1>Chatting Chatbots</h1>
     <div>
         <div id="chatbox">
             <p class="botText"><span>Hi! I'm CHATBOT A{{id}}.</span></p>
         </div>
         <div id="userInput">
-            <input id="textInput" type="text" name="msg" placeholder="Message">
-            <input id="buttonInput" type="submit" value="Send">
+            <!-- <input id="textInput" type="text" name="msg" placeholder="Message">
+            <input id="buttonInput" type="submit" value="Send"> -->
         </div>
         <script>
-            function getBotResponse() {
-                var rawText = $("#textInput").val();
-                var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
-                $("#textInput").val("");
-                $("#chatbox").append(userHtml);
-                document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'});
-                $.get("/get", { msg: rawText }).done(function(data) {
-                    console.log(rawText)
+            function getBot1Response(text) {
+                $.get("/get_response", { msg: text }).done(function(data) {
                     var botHtml = '<p class="botText"><span>' + data + '</span></p>';
                     $("#chatbox").append(botHtml);
-                    document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'});
+                    document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'}); 
+
+                    setTimeout(function(){ getBot2Response(data) }, 2000);
                 });
             }
-            
-            $("#textInput").keypress(function(e) {
-                $("#textInput").val().length != 0 && e.which == 13 ? getBotResponse() : null
-            });
-            $("#buttonInput").click(function() {
-                $("#textInput").val().length != 0 ? getBotResponse() : null
-            });
+
+            function getBot2Response(text) {
+                $.get("/get_response", { msg: text }).done(function(data) {
+                    var botHtml = '<p class="userText"><span>' + data + '</span></p>';
+                    $("#chatbox").append(botHtml);
+                    document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'});
+                    
+                    setTimeout(function(){ getBot1Response(data) }, 2000);
+                });
+            }
+
+            function onLoad() {
+                getBot2Response('Hi')
+            }
         </script>
     </div>
 

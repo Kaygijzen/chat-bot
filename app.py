@@ -5,16 +5,21 @@ import random
 
 # TODO: expand the chatbot
 
+# deze laat één chatbot tegen zichzelf praten
+
 app = Flask(__name__)
 
-english_bot = ChatBot(
-    "Chatterbot",
-    storage_adapter="chatterbot.storage.SQLStorageAdapter",
+default_bot = ChatBot(
+    "Chatterbot1",
+    storage_adapter='chatterbot.storage.SQLStorageAdapter',
     database_uri='sqlite:///database.sqlite3'
 )
-trainer = ChatterBotCorpusTrainer(english_bot)
-trainer.train("chatterbot.corpus.mycorpus")
-trainer.train("chatterbot.corpus.english")
+
+trainer = ChatterBotCorpusTrainer(default_bot)
+trainer.train(
+    "./data/mycorpus",
+    "chatterbot.corpus.english"
+)
 
 
 @app.route("/")
@@ -22,10 +27,10 @@ def home():
     return render_template("index.html", id=random.randint(1, 1000))
 
 
-@app.route("/get")
-def get_bot_response():
-    userText = request.args.get("msg")
-    return str(english_bot.get_response(userText))
+@app.route("/get_response")
+def get_response():
+    text = request.args.get("msg")
+    return str(default_bot.get_response(text))
 
 
 if __name__ == "__main__":
