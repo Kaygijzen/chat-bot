@@ -3,13 +3,14 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Chatbot</title>
+    <title>Chatting Chatbots</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body onload="onLoad()">
     <h1>Chatting Chatbots</h1>
     <div>
         <div id="chatbox">
-            <p class="botText"><span>Hi! I'm CHATBOT A{{id}}.</span></p>
+            <p class="botText"><span>Hi! I'm CHATBOT A{{id}}. Kay is my creator.</span></p>
         </div>
         <div id="userInput">
             <!-- <input id="textInput" type="text" name="msg" placeholder="Message">
