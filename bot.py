@@ -16,7 +16,7 @@ class Bot:
 
         trainer = ChatterBotCorpusTrainer(self.bot)
         trainer.train(
-            "./data/mycorpus",
+            # "./data/mycorpus",
             "chatterbot.corpus.english"
         )
 
