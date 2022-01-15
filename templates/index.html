@@ -6,52 +6,40 @@
     <title>Chatting Chatbots</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
-<body>
+<body onload="onLoad()">
     <h1>Chatting Chatbots</h1>
     <div>
         <div id="chatbox">
             <p class="botText"><span>Hi! I'm CHATBOT A{{id}}. Kay is my creator.</span></p>
         </div>
         <div id="userInput">
-            <input id="textInput" type="text" name="msg" placeholder="Message">
-            <input id="buttonInput" type="submit" value="Send">
+            <!-- <input id="textInput" type="text" name="msg" placeholder="Message">
+            <input id="buttonInput" type="submit" value="Send"> -->
         </div>
         <script>
-            function getBot1Response() {
-                var rawText = $("#textInput").val();
-                var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
-                $("#textInput").val("");
-                $("#chatbox").append(userHtml);
-                document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'});
-                $.get("/get_response", { msg: rawText }).done(function(data) {
+            function getBot1Response(text) {
+                $.get("/get_response", { msg: text }).done(function(data) {
                     var botHtml = '<p class="botText"><span>' + data + '</span></p>';
                     $("#chatbox").append(botHtml);
                     document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'}); 
+
+                    setTimeout(function(){ getBot2Response(data) }, 2000);
                 });
             }
 
-            $("#textInput").keypress(function(e) {
-                if(e.which == 13){
-                    getBot1Response()
-                }
-            });
-            $("#buttonInput").click(function() {
-                getBot1Response();
-            })
-
-            // function getBot2Response(text) {
-            //     $.get("/get_response", { msg: text }).done(function(data) {
-            //         var botHtml = '<p class="userText"><span>' + data + '</span></p>';
-            //         $("#chatbox").append(botHtml);
-            //         document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'});
+            function getBot2Response(text) {
+                $.get("/get_response", { msg: text }).done(function(data) {
+                    var botHtml = '<p class="userText"><span>' + data + '</span></p>';
+                    $("#chatbox").append(botHtml);
+                    document.getElementById('userInput').scrollIntoView({block: 'start', behaviour: 'smooth'});
                     
-            //         setTimeout(function(){ getBot1Response(data) }, 2000);
-            //     });
-            // }
+                    setTimeout(function(){ getBot1Response(data) }, 2000);
+                });
+            }
 
-            // function onLoad() {
-            //     getBot2Response('Hi')
-            // }
+            function onLoad() {
+                getBot2Response('Hi')
+            }
         </script>
     </div>
 
