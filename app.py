@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request
 import random
-# from bot import Bot
+from bot import Bot
 
 # TODO: expand the chatbot
 
 app: Flask = Flask(__name__)
-# bot: Bot = Bot()
+bot: Bot = Bot()
 
 
 @app.route("/")
@@ -16,8 +16,7 @@ def home():
 @app.route("/get_response")
 def get_response():
     text = request.args.get("msg")
-    return 'aaa'
-    # str(bot.get_response(text))
+    return str(bot.get_response(text))
 
 
 if __name__ == "__main__":

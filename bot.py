@@ -16,16 +16,16 @@ class Bot:
 
         trainer = ChatterBotCorpusTrainer(self.bot)
         trainer.train(
-            "./data/mycorpus",
+            # "./data/mycorpus",
             "chatterbot.corpus.english"
         )
 
-        """train based on extracted corpus"""
-        listtrainer = ListTrainer(self.bot)
-        # Use file to refer to the file object
-        with open("./data/my_conversations.json") as file:
-            data = json.load(file)
-            listtrainer.train(data)
+        # """train based on extracted corpus"""
+        # listtrainer = ListTrainer(self.bot)
+        # # Use file to refer to the file object
+        # with open("./data/my_conversations.json") as file:
+        #     data = json.load(file)
+        #     listtrainer.train(data)
 
     def get_response(self, text):
         return str(self.bot.get_response(text))
